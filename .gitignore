@@ -1,0 +1,17 @@
+# ---- 密钥与虚拟环境 ----
+.env
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# ---- 运行时数据（工具读写的工作目录） ----
+data/workspace/*
+!data/workspace/.gitkeep
+
+# ---- IDE / OS ----
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

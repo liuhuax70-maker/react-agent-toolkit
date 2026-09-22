@@ -1,0 +1,17 @@
+# ---- Web ----
+fastapi>=0.115,<0.116
+uvicorn[standard]>=0.30
+python-multipart>=0.0.9
+
+# ---- Agent / LLM ----
+langgraph>=0.2,<0.3
+langchain-core>=0.3
+openai>=1.40              # DeepSeek 使用 OpenAI 兼容 SDK（含 function calling）
+
+# ---- Utils ----
+python-dotenv>=1.0
+pydantic>=2.7
+httpx>=0.27
+
+# ---- Test ----
+pytest>=8.0
