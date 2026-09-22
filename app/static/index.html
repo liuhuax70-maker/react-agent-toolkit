@@ -175,6 +175,11 @@ const ICON_TRACE = '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="curr
 const ICON_OK = '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-9"/></svg>';
 const ICON_ERR = '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>';
 
+function fmt(text) {
+  const safe = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return safe.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+}
+
 function toast(text, kind = "ok") {
   const el = document.createElement("div");
   el.className = "toast " + kind;
@@ -343,8 +348,11 @@ async function ask() {
           scrollDown(false);
         } else if (evt.type === "final") {
           answer = evt.content;
-          ctx.answer.textContent = answer;
+          ctx.answer.innerHTML = fmt(answer);
           ctx.answer.classList.remove("pending");
+          if (current.step && !current.step.querySelector(".call")) {
+            current.step.remove();
+          }
           const steps = ctx.traceBody.children.length;
           ctx.traceTitle.textContent = steps ? "工具调用轨迹（" + steps + " 步）" : "工具调用轨迹（未使用工具）";
           scrollDown(false);
