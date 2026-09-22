@@ -77,7 +77,7 @@ react-agent-toolkit/
 │   │   ├── executor.py      #   执行器：重试与兜底
 │   │   └── graph.py         #   ReAct 循环（LangGraph）
 │   └── static/index.html    # 单页前端
-├── docs/                    # 设计文档与架构说明
+├── docs/                    # 设计文档、架构说明与运行教程
 ├── examples/                # 示例
 ├── scripts/e2e_test.py      # 端到端冒烟脚本
 ├── tests/                   # pytest 用例
@@ -100,6 +100,8 @@ uvicorn app.main:app --reload --port 8000
 ```
 
 打开 http://localhost:8000 使用；接口文档见 http://localhost:8000/docs 。
+
+> 本项目为纯 Python 项目，**没有编译步骤**。完整的环境准备、启动、验证与排错步骤见 **[docs/RUNNING.md](docs/RUNNING.md)**。
 
 ## 配置项（.env）
 
@@ -130,7 +132,18 @@ uvicorn app.main:app --reload --port 8000
 ```bash
 pytest -q                       # 单元测试（离线，使用脚本化假 LLM）
 uvicorn app.main:app --port 8000
-AGENT_BASE_URL=http://127.0.0.1:8000 python scripts/e2e_test.py
+python scripts/e2e_test.py      # 端到端冒烟（需服务 + Key）
+```
+
+端到端脚本默认连 `http://127.0.0.1:8000`，可用环境变量覆盖：
+
+```bat
+set AGENT_BASE_URL=http://127.0.0.1:8010
+python scripts/e2e_test.py
+```
+
+```bash
+AGENT_BASE_URL=http://127.0.0.1:8010 python scripts/e2e_test.py   # macOS / Linux
 ```
 
 ## 部署
